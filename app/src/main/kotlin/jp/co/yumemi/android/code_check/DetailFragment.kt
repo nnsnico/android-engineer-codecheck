@@ -12,9 +12,9 @@ import coil.load
 import jp.co.yumemi.android.code_check.TopActivity.Companion.lastSearchDate
 import jp.co.yumemi.android.code_check.databinding.FragmentTwoBinding
 
-class TwoFragment : Fragment(R.layout.fragment_two) {
+class DetailFragment : Fragment(R.layout.fragment_two) {
 
-    private val args: TwoFragmentArgs by navArgs()
+    private val args: DetailFragmentArgs by navArgs()
 
     private var binding: FragmentTwoBinding? = null
     private val _binding get() = binding!!

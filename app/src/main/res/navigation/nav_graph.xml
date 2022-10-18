@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/twoFragment"
-        android:name="jp.co.yumemi.android.code_check.TwoFragment"
+        android:name="jp.co.yumemi.android.code_check.DetailFragment"
         android:label="@string/app_name"
         tools:layout="@layout/fragment_two">
         <argument
