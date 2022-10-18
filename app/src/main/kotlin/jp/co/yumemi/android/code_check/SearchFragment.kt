@@ -59,7 +59,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     }
 }
 
-val diff_util = object : DiffUtil.ItemCallback<GitHubRepositoryItem>() {
+val diffUtil = object : DiffUtil.ItemCallback<GitHubRepositoryItem>() {
     override fun areItemsTheSame(oldItem: GitHubRepositoryItem, newItem: GitHubRepositoryItem): Boolean {
         return oldItem.name == newItem.name
     }
@@ -72,7 +72,7 @@ val diff_util = object : DiffUtil.ItemCallback<GitHubRepositoryItem>() {
 
 class CustomAdapter(
     private val itemClickListener: OnItemClickListener,
-) : ListAdapter<GitHubRepositoryItem, CustomAdapter.ViewHolder>(diff_util) {
+) : ListAdapter<GitHubRepositoryItem, CustomAdapter.ViewHolder>(diffUtil) {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
