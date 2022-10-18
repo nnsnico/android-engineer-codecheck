@@ -27,7 +27,7 @@ class SearchViewModel(
 ) : ViewModel() {
 
     // 検索結果
-    fun searchResults(inputText: String): List<item> = runBlocking {
+    fun searchResults(inputText: String): List<GitHubRepositoryItem> = runBlocking {
         val client = HttpClient(Android)
 
         return@runBlocking GlobalScope.async {
@@ -40,7 +40,7 @@ class SearchViewModel(
 
             val jsonItems = jsonBody.optJSONArray("items")!!
 
-            val items = mutableListOf<item>()
+            val items = mutableListOf<GitHubRepositoryItem>()
 
             /**
              * アイテムの個数分ループする
@@ -56,7 +56,7 @@ class SearchViewModel(
                 val openIssuesCount = jsonItem.optLong("open_issues_count")
 
                 items.add(
-                    item(
+                    GitHubRepositoryItem(
                         name = name,
                         ownerIconUrl = ownerIconUrl,
                         language = context.getString(R.string.written_language, language),
@@ -76,7 +76,7 @@ class SearchViewModel(
 }
 
 @Parcelize
-data class item(
+data class GitHubRepositoryItem(
     val name: String,
     val ownerIconUrl: String,
     val language: String,
