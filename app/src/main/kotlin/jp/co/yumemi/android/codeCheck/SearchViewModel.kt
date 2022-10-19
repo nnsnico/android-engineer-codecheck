@@ -31,11 +31,8 @@ class SearchViewModel(
                 header("Accept", "application/vnd.github.v3+json")
                 parameter("q", inputText)
             }
-
             val jsonBody = JSONObject(response.receive<String>())
-
             val jsonItems = jsonBody.optJSONArray("items")!!
-
             val items = mutableListOf<GitHubRepositoryItem>()
 
             for (i in 0 until jsonItems.length()) {
