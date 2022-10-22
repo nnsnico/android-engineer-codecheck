@@ -16,6 +16,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import kotlinx.parcelize.Parcelize
+import org.json.JSONArray
 import org.json.JSONObject
 import java.util.*
 
@@ -32,30 +33,33 @@ class SearchViewModel(
                 parameter("q", inputText)
             }
             val jsonBody = JSONObject(response.receive<String>())
-            val jsonItems = jsonBody.optJSONArray("items")!!
+            val jsonItems: JSONArray? = jsonBody.optJSONArray("items")
             val items = mutableListOf<GitHubRepositoryItem>()
 
-            for (i in 0 until jsonItems.length()) {
-                val jsonItem = jsonItems.optJSONObject(i)!!
-                val name = jsonItem.optString("full_name")
-                val ownerIconUrl = jsonItem.optJSONObject("owner")!!.optString("avatar_url")
-                val language = jsonItem.optString("language")
-                val stargazersCount = jsonItem.optLong("stargazers_count")
-                val watchersCount = jsonItem.optLong("watchers_count")
-                val forksCount = jsonItem.optLong("forks_count")
-                val openIssuesCount = jsonItem.optLong("open_issues_count")
+            jsonItems?.let { itemArray ->
+                for (i in 0 until itemArray.length()) {
+                    val jsonItem: JSONObject? = itemArray.optJSONObject(i)
+                    val name = jsonItem?.optString("full_name") ?: ""
+                    val ownerIconUrl =
+                        jsonItem?.optJSONObject("owner")?.optString("avatar_url") ?: ""
+                    val language = jsonItem?.optString("language") ?: ""
+                    val stargazersCount = jsonItem?.optLong("stargazers_count") ?: 0L
+                    val watchersCount = jsonItem?.optLong("watchers_count") ?: 0L
+                    val forksCount = jsonItem?.optLong("forks_count") ?: 0L
+                    val openIssuesCount = jsonItem?.optLong("open_issues_count") ?: 0L
 
-                items.add(
-                    GitHubRepositoryItem(
-                        name = name,
-                        ownerIconUrl = ownerIconUrl,
-                        language = app.getString(R.string.written_language, language),
-                        stargazersCount = stargazersCount,
-                        watchersCount = watchersCount,
-                        forksCount = forksCount,
-                        openIssuesCount = openIssuesCount
+                    items.add(
+                        GitHubRepositoryItem(
+                            name = name,
+                            ownerIconUrl = ownerIconUrl,
+                            language = app.getString(R.string.written_language, language),
+                            stargazersCount = stargazersCount,
+                            watchersCount = watchersCount,
+                            forksCount = forksCount,
+                            openIssuesCount = openIssuesCount
+                        )
                     )
-                )
+                }
             }
 
             lastSearchDate = Date()
