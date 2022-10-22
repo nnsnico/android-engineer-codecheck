@@ -16,8 +16,7 @@ class DetailFragment : Fragment(R.layout.fragment_two) {
 
     private val args: DetailFragmentArgs by navArgs()
 
-    private var binding: FragmentTwoBinding? = null
-    private val _binding get() = binding!!
+    private lateinit var binding: FragmentTwoBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -28,12 +27,12 @@ class DetailFragment : Fragment(R.layout.fragment_two) {
 
         val item = args.item
 
-        _binding.ownerIconView.load(item.ownerIconUrl);
-        _binding.nameView.text = item.name;
-        _binding.languageView.text = item.language;
-        _binding.starsView.text = "${item.stargazersCount} stars";
-        _binding.watchersView.text = "${item.watchersCount} watchers";
-        _binding.forksView.text = "${item.forksCount} forks";
-        _binding.openIssuesView.text = "${item.openIssuesCount} open issues";
+        binding.ownerIconView.load(item.ownerIconUrl);
+        binding.nameView.text = item.name;
+        binding.languageView.text = item.language;
+        binding.starsView.text = "${item.stargazersCount} stars";
+        binding.watchersView.text = "${item.watchersCount} watchers";
+        binding.forksView.text = "${item.forksCount} forks";
+        binding.openIssuesView.text = "${item.openIssuesCount} open issues";
     }
 }
