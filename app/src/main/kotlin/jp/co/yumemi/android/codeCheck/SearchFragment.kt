@@ -10,19 +10,23 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.*
 import jp.co.yumemi.android.codeCheck.databinding.FragmentSearchBinding
 
 class SearchFragment : Fragment(R.layout.fragment_search) {
 
+    private val viewModel: SearchViewModel by viewModels()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val binding = FragmentSearchBinding.bind(view)
-        val viewModel = SearchViewModel(context!!)
-        val layoutManager = LinearLayoutManager(context!!)
-        val dividerItemDecoration = DividerItemDecoration(context!!, layoutManager.orientation)
+        val layoutManager = LinearLayoutManager(context)
+        val dividerItemDecoration = context?.let {
+            DividerItemDecoration(it, layoutManager.orientation)
+        }
         val adapter = CustomAdapter(object : CustomAdapter.OnItemClickListener {
             override fun itemClick(item: GitHubRepositoryItem) {
                 gotoRepositoryFragment(item)
@@ -43,7 +47,9 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             }
             recyclerView.also {
                 it.layoutManager = layoutManager
-                it.addItemDecoration(dividerItemDecoration)
+                dividerItemDecoration?.run {
+                    it.addItemDecoration(this)
+                }
                 it.adapter = adapter
             }
         }
@@ -92,8 +98,7 @@ private class CustomAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        (holder.itemView.findViewById<View>(R.id.repositoryNameView) as TextView).text =
-            item.name
+        holder.itemView.findViewById<TextView>(R.id.repositoryNameView).text = item.name
 
         holder.itemView.setOnClickListener {
             itemClickListener.itemClick(item)
