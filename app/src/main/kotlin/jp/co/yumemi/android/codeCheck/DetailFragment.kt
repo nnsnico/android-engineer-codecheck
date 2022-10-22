@@ -10,20 +10,20 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import coil.load
 import jp.co.yumemi.android.codeCheck.TopActivity.Companion.lastSearchDate
-import jp.co.yumemi.android.codeCheck.databinding.FragmentTwoBinding
+import jp.co.yumemi.android.codeCheck.databinding.FragmentDetailBinding
 
-class DetailFragment : Fragment(R.layout.fragment_two) {
+class DetailFragment : Fragment(R.layout.fragment_detail) {
 
     private val args: DetailFragmentArgs by navArgs()
 
-    private lateinit var binding: FragmentTwoBinding
+    private lateinit var binding: FragmentDetailBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         Log.d("検索した日時", lastSearchDate.toString())
 
-        binding = FragmentTwoBinding.bind(view)
+        binding = FragmentDetailBinding.bind(view)
 
         val item = args.item
 
