@@ -3,9 +3,9 @@
  */
 package jp.co.yumemi.android.codeCheck
 
-import android.content.Context
+import android.app.Application
 import android.os.Parcelable
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.AndroidViewModel
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.engine.android.*
@@ -20,8 +20,8 @@ import org.json.JSONObject
 import java.util.*
 
 class SearchViewModel(
-    val context: Context
-) : ViewModel() {
+    private val app: Application
+) : AndroidViewModel(app) {
 
     fun searchResults(inputText: String): List<GitHubRepositoryItem> = runBlocking {
         val client = HttpClient(Android)
@@ -49,7 +49,7 @@ class SearchViewModel(
                     GitHubRepositoryItem(
                         name = name,
                         ownerIconUrl = ownerIconUrl,
-                        language = context.getString(R.string.written_language, language),
+                        language = app.getString(R.string.written_language, language),
                         stargazersCount = stargazersCount,
                         watchersCount = watchersCount,
                         forksCount = forksCount,
