@@ -28,9 +28,9 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         val item = args.item
 
         binding.run {
-            ownerIconView.load(item.ownerIconUrl)
-            nameView.text = item.name
             languageView.text = item.language
+            ownerIconView.load(item.avatarUrl)
+            nameView.text = item.fullName
             starsView.text = "${item.stargazersCount} stars"
             watchersView.text = "${item.watchersCount} watchers"
             forksView.text = "${item.forksCount} forks"
