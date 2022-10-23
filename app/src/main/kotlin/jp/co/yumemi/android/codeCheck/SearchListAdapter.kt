@@ -1,37 +1,42 @@
 package jp.co.yumemi.android.codeCheck
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import jp.co.yumemi.android.codeCheck.databinding.LayoutItemBinding
 
 class SearchListAdapter(
     private val itemClickListener: OnItemClickListener,
 ) : ListAdapter<GitHubRepositoryItem, SearchListAdapter.ViewHolder>(DiffCallback) {
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
+    class ViewHolder(
+        private val binding: LayoutItemBinding,
+        private val itemClickListener: OnItemClickListener,
+    ) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: GitHubRepositoryItem) {
+            binding.repositoryNameView.run {
+                text = item.name
+                setOnClickListener {
+                    itemClickListener.itemClick(item)
+                }
+            }
+        }
+    }
 
     interface OnItemClickListener {
         fun itemClick(item: GitHubRepositoryItem)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater
-            .from(parent.context)
-            .inflate(R.layout.layout_item, parent, false)
-        return ViewHolder(view)
+        val view = LayoutInflater.from(parent.context)
+        val binding = LayoutItemBinding.inflate(view, parent, false)
+        return ViewHolder(binding, itemClickListener)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = getItem(position)
-
-        holder.itemView.findViewById<TextView>(R.id.repositoryNameView).text = item.name
-        holder.itemView.setOnClickListener {
-            itemClickListener.itemClick(item)
-        }
+        holder.bind(getItem(position))
     }
 
     private object DiffCallback : DiffUtil.ItemCallback<GitHubRepositoryItem>() {
