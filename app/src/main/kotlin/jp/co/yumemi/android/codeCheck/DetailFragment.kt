@@ -27,12 +27,14 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
 
         val item = args.item
 
-        binding.ownerIconView.load(item.ownerIconUrl)
-        binding.nameView.text = item.name
-        binding.languageView.text = item.language
-        binding.starsView.text = "${item.stargazersCount} stars"
-        binding.watchersView.text = "${item.watchersCount} watchers"
-        binding.forksView.text = "${item.forksCount} forks"
-        binding.openIssuesView.text = "${item.openIssuesCount} open issues"
+        binding.run {
+            ownerIconView.load(item.ownerIconUrl)
+            nameView.text = item.name
+            languageView.text = item.language
+            starsView.text = "${item.stargazersCount} stars"
+            watchersView.text = "${item.watchersCount} watchers"
+            forksView.text = "${item.forksCount} forks"
+            openIssuesView.text = "${item.openIssuesCount} open issues"
+        }
     }
 }
