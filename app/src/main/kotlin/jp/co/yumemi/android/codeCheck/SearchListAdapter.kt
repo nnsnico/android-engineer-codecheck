@@ -17,7 +17,7 @@ class SearchListAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: GitHubRepositoryItem) {
             binding.repositoryNameView.run {
-                text = item.name
+                text = item.fullName
                 setOnClickListener {
                     itemClickListener.itemClick(item)
                 }
@@ -44,7 +44,7 @@ class SearchListAdapter(
             oldItem: GitHubRepositoryItem,
             newItem: GitHubRepositoryItem
         ): Boolean {
-            return oldItem.name == newItem.name
+            return oldItem.fullName == newItem.fullName
         }
 
         override fun areContentsTheSame(
