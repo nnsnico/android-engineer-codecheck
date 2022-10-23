@@ -37,9 +37,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             searchInputText.setOnEditorActionListener { editText, action, _ ->
                 if (action == EditorInfo.IME_ACTION_SEARCH) {
                     editText.text.toString().let {
-                        viewModel.searchResults(it).apply {
-                            adapter.submitList(this)
-                        }
+                        viewModel.searchResults(it)
                     }
                     return@setOnEditorActionListener true
                 }
@@ -52,6 +50,10 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                 }
                 it.adapter = adapter
             }
+        }
+
+        viewModel.repositoryItems.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
         }
     }
 

@@ -5,16 +5,18 @@ package jp.co.yumemi.android.codeCheck
 
 import android.app.Application
 import android.os.Parcelable
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.engine.android.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import jp.co.yumemi.android.codeCheck.TopActivity.Companion.lastSearchDate
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.launch
 import kotlinx.parcelize.Parcelize
 import org.json.JSONArray
 import org.json.JSONObject
@@ -24,20 +26,28 @@ class SearchViewModel(
     private val app: Application
 ) : AndroidViewModel(app) {
 
-    fun searchResults(inputText: String): List<GitHubRepositoryItem> = runBlocking {
-        val client = HttpClient(Android)
+    private val _repositoryItems: MutableLiveData<List<GitHubRepositoryItem>> = MutableLiveData()
+    val repositoryItems: LiveData<List<GitHubRepositoryItem>> = _repositoryItems
 
-        return@runBlocking GlobalScope.async {
-            val response: HttpResponse = client.get("https://api.github.com/search/repositories") {
-                header("Accept", "application/vnd.github.v3+json")
-                parameter("q", inputText)
+    fun searchResults(inputText: String) {
+        viewModelScope.launch {
+            val client = HttpClient(Android)
+
+            val response: HttpResponse? = runCatching {
+                client.get<HttpResponse>("https://api.github.com/search/repositories") {
+                    header("Accept", "application/vnd.github.v3+json")
+                    parameter("q", inputText)
+                }
+            }.getOrElse {
+                Log.d(this@SearchViewModel.javaClass.simpleName, "Failed to load: $it")
+                null
             }
-            val jsonBody = JSONObject(response.receive<String>())
-            val jsonItems: JSONArray? = jsonBody.optJSONArray("items")
-            val items = mutableListOf<GitHubRepositoryItem>()
+
+            val jsonBody = response?.receive<String>()?.let { JSONObject(it) }
+            val jsonItems: JSONArray? = jsonBody?.optJSONArray("items")
 
             jsonItems?.let { itemArray ->
-                for (i in 0 until itemArray.length()) {
+                _repositoryItems.value = (0 until itemArray.length()).map { i ->
                     val jsonItem: JSONObject? = itemArray.optJSONObject(i)
                     val name = jsonItem?.optString("full_name") ?: ""
                     val ownerIconUrl =
@@ -48,24 +58,19 @@ class SearchViewModel(
                     val forksCount = jsonItem?.optLong("forks_count") ?: 0L
                     val openIssuesCount = jsonItem?.optLong("open_issues_count") ?: 0L
 
-                    items.add(
-                        GitHubRepositoryItem(
-                            name = name,
-                            ownerIconUrl = ownerIconUrl,
-                            language = app.getString(R.string.written_language, language),
-                            stargazersCount = stargazersCount,
-                            watchersCount = watchersCount,
-                            forksCount = forksCount,
-                            openIssuesCount = openIssuesCount
-                        )
+                    GitHubRepositoryItem(
+                        name = name,
+                        ownerIconUrl = ownerIconUrl,
+                        language = app.getString(R.string.written_language, language),
+                        stargazersCount = stargazersCount,
+                        watchersCount = watchersCount,
+                        forksCount = forksCount,
+                        openIssuesCount = openIssuesCount
                     )
                 }
+                lastSearchDate = Date()
             }
-
-            lastSearchDate = Date()
-
-            return@async items.toList()
-        }.await()
+        }
     }
 }
 
