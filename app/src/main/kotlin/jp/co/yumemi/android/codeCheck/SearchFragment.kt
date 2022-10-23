@@ -27,7 +27,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         val dividerItemDecoration = context?.let {
             DividerItemDecoration(it, layoutManager.orientation)
         }
-        val adapter = CustomAdapter(object : CustomAdapter.OnItemClickListener {
+        val adapter = SearchListAdapter(object : SearchListAdapter.OnItemClickListener {
             override fun itemClick(item: GitHubRepositoryItem) {
                 gotoRepositoryFragment(item)
             }
@@ -64,46 +64,3 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     }
 }
 
-private val diffUtil = object : DiffUtil.ItemCallback<GitHubRepositoryItem>() {
-    override fun areItemsTheSame(
-        oldItem: GitHubRepositoryItem,
-        newItem: GitHubRepositoryItem
-    ): Boolean {
-        return oldItem.name == newItem.name
-    }
-
-    override fun areContentsTheSame(
-        oldItem: GitHubRepositoryItem,
-        newItem: GitHubRepositoryItem
-    ): Boolean {
-        return oldItem == newItem
-    }
-
-}
-
-private class CustomAdapter(
-    private val itemClickListener: OnItemClickListener,
-) : ListAdapter<GitHubRepositoryItem, CustomAdapter.ViewHolder>(diffUtil) {
-
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
-
-    interface OnItemClickListener {
-        fun itemClick(item: GitHubRepositoryItem)
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater
-            .from(parent.context)
-            .inflate(R.layout.layout_item, parent, false)
-        return ViewHolder(view)
-    }
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = getItem(position)
-        holder.itemView.findViewById<TextView>(R.id.repositoryNameView).text = item.name
-
-        holder.itemView.setOnClickListener {
-            itemClickListener.itemClick(item)
-        }
-    }
-}
