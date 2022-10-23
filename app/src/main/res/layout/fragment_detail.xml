@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".DetailFragment">
 
     <ImageView
         android:id="@+id/ownerIconView"
@@ -11,24 +13,24 @@
         android:layout_height="0dp"
         android:layout_margin="16dp"
         android:contentDescription="@null"
-        android:src="@drawable/jetbrains"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_max="240dp" />
+        app:layout_constraintWidth_max="240dp"
+        tools:src="@drawable/jetbrains" />
 
     <TextView
         android:id="@+id/nameView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="JetBrains/kotlin"
         android:textColor="@color/black"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ownerIconView" />
+        app:layout_constraintTop_toBottomOf="@id/ownerIconView"
+        tools:text="@string/test_repository_name" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/centerGuid"
@@ -43,11 +45,11 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="8dp"
-        android:text="Written in Kotlin"
         android:textColor="@color/black"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/nameView"
+        tools:text="@string/test_written_language" />
 
     <TextView
         android:id="@+id/starsView"
@@ -55,13 +57,13 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="8dp"
-        android:text="38530 stars"
         android:textAlignment="textEnd"
         android:textColor="@color/black"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/centerGuid"
-        app:layout_constraintTop_toBottomOf="@id/nameView" />
+        app:layout_constraintTop_toBottomOf="@id/nameView"
+        tools:text="@string/test_star_count" />
 
     <TextView
         android:id="@+id/watchersView"
@@ -69,13 +71,13 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="8dp"
-        android:text="38530 watchers"
         android:textAlignment="textEnd"
         android:textColor="@color/black"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/centerGuid"
-        app:layout_constraintTop_toBottomOf="@id/starsView" />
+        app:layout_constraintTop_toBottomOf="@id/starsView"
+        tools:text="@string/test_watcher_count" />
 
     <TextView
         android:id="@+id/forksView"
@@ -83,13 +85,13 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="8dp"
-        android:text="4675 forks"
         android:textAlignment="textEnd"
         android:textColor="@color/black"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="@id/centerGuid"
-        app:layout_constraintTop_toBottomOf="@id/watchersView" />
+        app:layout_constraintTop_toBottomOf="@id/watchersView"
+        tools:text="@string/test_fork_count" />
 
     <TextView
         android:id="@+id/openIssuesView"
@@ -97,12 +99,12 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="8dp"
-        android:text="131 open issues"
         android:textAlignment="textEnd"
         android:textColor="@color/black"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/centerGuid"
-        app:layout_constraintTop_toBottomOf="@id/forksView" />
+        app:layout_constraintTop_toBottomOf="@id/forksView"
+        tools:text="@string/test_open_issue_count" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
