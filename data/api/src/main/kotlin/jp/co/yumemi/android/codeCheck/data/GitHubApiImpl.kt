@@ -1,4 +1,4 @@
-package jp.co.yumemi.android.codeCheck
+package jp.co.yumemi.android.codeCheck.data
 
 import io.ktor.client.*
 import io.ktor.client.call.*
