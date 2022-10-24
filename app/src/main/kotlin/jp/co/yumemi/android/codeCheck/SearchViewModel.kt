@@ -10,6 +10,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.ktor.client.*
 import io.ktor.client.engine.android.*
+import jp.co.yumemi.android.codeCheck.data.GitHubApi
+import jp.co.yumemi.android.codeCheck.data.GitHubApiImpl
+import jp.co.yumemi.android.codeCheck.data.GitHubRepositoryImpl
 import jp.co.yumemi.android.codeCheck.model.GitHubRepositoryItem
 import jp.co.yumemi.android.codeCheck.model.repository.GitHubRepository
 import kotlinx.coroutines.launch
