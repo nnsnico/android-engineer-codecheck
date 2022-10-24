@@ -1,7 +1,7 @@
 /*
  * Copyright © 2021 YUMEMI Inc. All rights reserved.
  */
-package jp.co.yumemi.android.codeCheck
+package jp.co.yumemi.android.codeCheck.detail
 
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +9,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import coil.load
+import jp.co.yumemi.android.codeCheck.R
 import jp.co.yumemi.android.codeCheck.TopActivity.Companion.lastSearchDate
 import jp.co.yumemi.android.codeCheck.databinding.FragmentDetailBinding
 
