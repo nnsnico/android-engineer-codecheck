@@ -26,7 +26,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             DividerItemDecoration(it, layoutManager.orientation)
         }
         val adapter = SearchListAdapter(object : SearchListAdapter.OnItemClickListener {
-            override fun itemClick(item: GitHubRepositoryItem) {
+            override fun itemClick(item: jp.co.yumemi.android.codeCheck.model.GitHubRepositoryItem) {
                 gotoRepositoryFragment(item)
             }
         })
@@ -55,7 +55,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         }
     }
 
-    private fun gotoRepositoryFragment(item: GitHubRepositoryItem) {
+    private fun gotoRepositoryFragment(item: jp.co.yumemi.android.codeCheck.model.GitHubRepositoryItem) {
         val action = SearchFragmentDirections
             .actionRepositoriesFragmentToRepositoryFragment(item = item)
         findNavController().navigate(action)
