@@ -10,6 +10,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.ktor.client.*
 import io.ktor.client.engine.android.*
+import jp.co.yumemi.android.codeCheck.model.GitHubRepositoryItem
+import jp.co.yumemi.android.codeCheck.model.repository.GitHubRepository
 import kotlinx.coroutines.launch
 
 class SearchViewModel : ViewModel() {

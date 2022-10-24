@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import jp.co.yumemi.android.codeCheck.databinding.LayoutItemBinding
+import jp.co.yumemi.android.codeCheck.model.GitHubRepositoryItem
 
 class SearchListAdapter(
     private val itemClickListener: OnItemClickListener,
