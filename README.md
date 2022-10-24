@@ -12,10 +12,10 @@
 
 ### 環境
 
-- IDE：Android Studio Arctic Fox | 2020.3.1 Patch 1
+- IDE：Android Studio Dolphin | 2021.3.1
 - Kotlin：1.5.31
 - Java：11
-- Gradle：7.0.1
+- Gradle：7.0.3
 - minSdk：23
 - targetSdk：31
 
