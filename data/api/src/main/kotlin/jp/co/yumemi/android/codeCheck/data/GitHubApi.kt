@@ -1,4 +1,4 @@
-package jp.co.yumemi.android.codeCheck
+package jp.co.yumemi.android.codeCheck.data
 
 import org.json.JSONObject
 

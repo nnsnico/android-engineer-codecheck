@@ -1,4 +1,4 @@
-package jp.co.yumemi.android.codeCheck
+package jp.co.yumemi.android.codeCheck.data
 
 import jp.co.yumemi.android.codeCheck.model.GitHubRepositoryItem
 import jp.co.yumemi.android.codeCheck.model.repository.GitHubRepository
