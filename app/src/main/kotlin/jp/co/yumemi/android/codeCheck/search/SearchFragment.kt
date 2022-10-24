@@ -11,13 +11,23 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import io.ktor.client.*
+import io.ktor.client.engine.android.*
 import jp.co.yumemi.android.codeCheck.R
+import jp.co.yumemi.android.codeCheck.data.GitHubApi
+import jp.co.yumemi.android.codeCheck.data.GitHubApiImpl
+import jp.co.yumemi.android.codeCheck.data.GitHubRepositoryImpl
 import jp.co.yumemi.android.codeCheck.databinding.FragmentSearchBinding
 import jp.co.yumemi.android.codeCheck.model.GitHubRepositoryItem
 
 class SearchFragment : Fragment(R.layout.fragment_search) {
 
-    private val viewModel: SearchViewModel by viewModels()
+    private val viewModel: SearchViewModel by viewModels {
+        val client = HttpClient(Android)
+        val api: GitHubApi = GitHubApiImpl(client)
+        val repository = GitHubRepositoryImpl(api)
+        SearchViewModel.provideFactory(repository)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
